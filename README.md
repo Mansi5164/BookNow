@@ -1,6 +1,6 @@
 # 🚕 Cab Booking System Backend
 
-[![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2024-orange)](https://hacktoberfest.digitalocean.com/)
+[![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2025-orange)](https://hacktoberfest.digitalocean.com/)
 [![Java](https://img.shields.io/badge/Java-17-blue)](https://openjdk.java.net/projects/jdk/17/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-green)](https://spring.io/projects/spring-boot)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
