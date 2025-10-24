@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static com.cabbooking.util.ApplicationConstants.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -20,10 +22,10 @@ public class UserService {
 
     public User createUser(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new RuntimeException(EMAIL_ALREADY_EXISTS);
         }
         if (userRepository.existsByPhoneNumber(user.getPhoneNumber())) {
-            throw new RuntimeException("Phone number already exists");
+            throw new RuntimeException(PHONE_NUMBER_ALREADY_EXISTS);
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -60,7 +62,7 @@ public class UserService {
 
     public User updateUser(Long id, User updatedUser) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND));
 
         existingUser.setFirstName(updatedUser.getFirstName());
         existingUser.setLastName(updatedUser.getLastName());
@@ -75,7 +77,7 @@ public class UserService {
 
     public User updateUserStatus(Long id, User.UserStatus status) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND));
 
         user.setStatus(status);
         return userRepository.save(user);
@@ -83,7 +85,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException("User not found");
+            throw new RuntimeException(USER_NOT_FOUND);
         }
         userRepository.deleteById(id);
     }
