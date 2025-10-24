@@ -38,11 +38,50 @@ public final class ApplicationConstants {
     public static final String PHONE_NUMBER_ALREADY_EXISTS = "Phone number already exists";
 
     // ==========================================================
-    // 🔹 Data Validation Rules
+    // 🔹 General Data Validation
     // ==========================================================
-    public static final String PHONE_PATTERN = "^[0-9]{10}$";
     public static final int MAX_NAME_LENGTH = 50;
     public static final int MAX_EMAIL_LENGTH = 100;
+    public static final int MIN_PASSWORD_LENGTH = 8;
+    public static final int MAX_PASSWORD_LENGTH = 100;
+    public static final String PHONE_PATTERN = "^[0-9]{10}$";
+    public static final int MAX_COLOR_LENGTH = 30;
+    public static final int MIN_YEAR = 1900;
+    public static final int MAX_YEAR = 2100;
+    public static final int MIN_SEATING_CAPACITY = 1;
+
+    // ==========================================================
+    // 🔹 Booking & Address Validation
+    // ==========================================================
+    public static final int MAX_STATUS_LENGTH = 50;
+    public static final int MAX_ADDRESS_LENGTH = 255;
+    public static final double MIN_FARE = 0.0;
+    public static final double MIN_DISTANCE = 0.0;
+    public static final int MIN_DURATION = 0;
+    public static final int MAX_CAB_TYPE_LENGTH = 50;
+    public static final int MAX_SPECIAL_INSTRUCTIONS_LENGTH = 500;
+    public static final int MAX_PAYMENT_METHOD_LENGTH = 50;
+
+    // ==========================================================
+    // 🔹 Driver & Rating
+    // ==========================================================
+    public static final double MIN_RATING = 0.0;
+    public static final double MAX_RATING = 5.0;
+    public static final String MIN_RATING_STRING = "0.0";
+    public static final String MAX_RATING_STRING = "5.0";
+    public static final int MIN_TOTAL_RIDES = 0;
+
+    // ==========================================================
+    // 🔹 Latitude & Longitude
+    // ==========================================================
+    public static final double MIN_LATITUDE = -90.0;
+    public static final double MAX_LATITUDE = 90.0;
+    public static final double MIN_LONGITUDE = -180.0;
+    public static final double MAX_LONGITUDE = 180.0;
+    public static final String MIN_LATITUDE_STRING = "-90.0";
+    public static final String MAX_LATITUDE_STRING = "90.0";
+    public static final String MIN_LONGITUDE_STRING = "-180.0";
+    public static final String MAX_LONGITUDE_STRING = "180.0";
 
     // ==========================================================
     // 🔹 Booking Configuration
