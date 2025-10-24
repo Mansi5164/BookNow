@@ -6,11 +6,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-A comprehensive Spring Boot backend system for a cab booking application with RESTful APIs. This project is **Hacktoberfest 2024 friendly** and welcomes contributions from developers of all skill levels!
+A comprehensive Spring Boot backend system for a cab booking application with RESTful APIs. This project is **Hacktoberfest 2025 friendly** and welcomes contributions from developers of all skill levels!
 
-## 🎯 Hacktoberfest 2024
+## 🎯 Hacktoberfest 2025
 
-This repository is participating in **Hacktoberfest 2024**! We welcome contributions from developers worldwide. Whether you're a beginner or an experienced developer, there are opportunities for everyone.
+This repository is participating in **Hacktoberfest 2025**! We welcome contributions from developers worldwide. Whether you're a beginner or an experienced developer, there are opportunities for everyone.
 
 ### 🤝 How to Contribute
 1. Check our [Issues](../../issues) for `hacktoberfest` labeled tasks
@@ -284,7 +284,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - Thanks to all contributors who help make this project better
-- Special recognition for Hacktoberfest 2024 participants
 - Inspired by real-world cab booking systems and best practices
 
 ## ⭐ Show Your Support
