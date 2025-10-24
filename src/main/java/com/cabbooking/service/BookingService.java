@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.cabbooking.util.ApplicationConstants.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -25,10 +27,10 @@ public class BookingService {
     public Booking createBooking(Booking booking) {
         // Validate user exists
         userService.findById(booking.getUser().getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND));
 
         // Generate unique booking number
-        booking.setBookingNumber("CAB" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
+        booking.setBookingNumber(BOOKING_NUMBER_PREFIX + UUID.randomUUID().toString().substring(0, BOOKING_NUMBER_LENGTH).toUpperCase());
 
         // Calculate estimated fare and duration (simplified calculation)
         BigDecimal estimatedFare = calculateEstimatedFare(
@@ -76,27 +78,27 @@ public class BookingService {
 
     public Booking assignDriverToBooking(Long bookingId, Long driverId) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new RuntimeException(BOOKING_NOT_FOUND));
 
         Driver driver = driverService.findById(driverId)
-                .orElseThrow(() -> new RuntimeException("Driver not found"));
+                .orElseThrow(() -> new RuntimeException(DRIVER_NOT_FOUND));
 
         if (booking.getStatus() != Booking.BookingStatus.REQUESTED) {
-            throw new RuntimeException("Booking is not in REQUESTED status");
+            throw new RuntimeException(BOOKING_NOT_IN_REQUESTED_STATUS);
         }
 
         if (driver.getStatus() != Driver.DriverStatus.ONLINE) {
-            throw new RuntimeException("Driver is not online");
+            throw new RuntimeException(DRIVER_IS_NOT_ONLINE);
         }
 
         // Check if driver already has an active booking
         if (findActiveBookingByDriverId(driverId).isPresent()) {
-            throw new RuntimeException("Driver already has an active booking");
+            throw new RuntimeException(DRIVER_HAS_ACTIVE_BOOKING);
         }
 
         // Get driver's cab
         Cab cab = cabService.findByDriverId(driverId)
-                .orElseThrow(() -> new RuntimeException("Driver does not have a cab assigned"));
+                .orElseThrow(() -> new RuntimeException(DRIVER_DOES_NOT_HAVE_CAB));
 
         booking.setDriver(driver);
         booking.setCab(cab);
@@ -112,7 +114,7 @@ public class BookingService {
 
     public Booking updateBookingStatus(Long bookingId, Booking.BookingStatus status) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new RuntimeException(BOOKING_NOT_FOUND));
 
         Booking.BookingStatus currentStatus = booking.getStatus();
 
@@ -166,7 +168,7 @@ public class BookingService {
 
     public Booking updateBookingFare(Long bookingId, BigDecimal actualFare) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new RuntimeException(BOOKING_NOT_FOUND));
 
         booking.setActualFare(actualFare);
         return bookingRepository.save(booking);
@@ -174,7 +176,7 @@ public class BookingService {
 
     public Booking updatePaymentStatus(Long bookingId, Booking.PaymentStatus paymentStatus) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new RuntimeException(BOOKING_NOT_FOUND));
 
         booking.setPaymentStatus(paymentStatus);
         return bookingRepository.save(booking);
@@ -208,7 +210,13 @@ public class BookingService {
         };
 
         if (!isValidTransition) {
-            throw new RuntimeException("Invalid status transition from " + from + " to " + to);
+            String message = String.format(
+                    INVALID_STATUS_TRANSITION_MSG,
+                    from,
+                    to
+            );
+
+            throw new RuntimeException(message);
         }
     }
 
@@ -216,24 +224,23 @@ public class BookingService {
             Double dropoffLat, Double dropoffLng,
             Booking.CabType cabType) {
         BigDecimal distance = calculateDistance(pickupLat, pickupLng, dropoffLat, dropoffLng);
-        BigDecimal baseFare = new BigDecimal("50.00"); // Base fare
         BigDecimal perKmRate = getPerKmRate(cabType);
 
-        return baseFare.add(distance.multiply(perKmRate));
+        return BASE_FARE.add(distance.multiply(perKmRate));
     }
 
     private BigDecimal getPerKmRate(Booking.CabType cabType) {
         return switch (cabType) {
-            case HATCHBACK -> new BigDecimal("10.00");
-            case SEDAN -> new BigDecimal("12.00");
-            case SUV -> new BigDecimal("15.00");
-            case LUXURY -> new BigDecimal("20.00");
+                case HATCHBACK -> HATCHBACK_FARE;
+                case SEDAN -> SEDAN_FARE;
+                case SUV -> SUV_FARE;
+                case LUXURY -> LUXURY_FARE;
         };
     }
 
     private BigDecimal calculateDistance(Double lat1, Double lng1, Double lat2, Double lng2) {
         // Haversine formula for distance calculation
-        double earthRadius = 6371; // Radius of earth in kilometers
+
 
         double dLat = Math.toRadians(lat2 - lat1);
         double dLng = Math.toRadians(lng2 - lng1);
@@ -243,15 +250,14 @@ public class BookingService {
                         Math.sin(dLng / 2) * Math.sin(dLng / 2);
 
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = earthRadius * c;
+        double distance = EARTH_RADIUS * c;
 
         return BigDecimal.valueOf(distance);
     }
 
     private Integer calculateEstimatedDuration(BigDecimal distance) {
         // Assuming average speed of 30 km/h in city traffic
-        double avgSpeedKmh = 30.0;
-        double durationHours = distance.doubleValue() / avgSpeedKmh;
-        return (int) (durationHours * 60); // Convert to minutes
+        double durationHours = distance.doubleValue() / DEFAULT_AVG_SPEED_KMH;
+        return (int) (durationHours * MINUTES_IN_HOUR); // Convert to minutes
     }
 }
