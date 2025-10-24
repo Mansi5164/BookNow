@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static com.cabbooking.util.ApplicationConstants.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -21,14 +23,14 @@ public class CabService {
     public Cab createCab(Cab cab) {
         // Validate that the driver exists
         Driver driver = driverService.findById(cab.getDriver().getId())
-                .orElseThrow(() -> new RuntimeException("Driver not found"));
+                .orElseThrow(() -> new RuntimeException(DRIVER_NOT_FOUND));
 
         if (cabRepository.findByDriverId(driver.getId()).isPresent()) {
-            throw new RuntimeException("Driver already has a cab assigned");
+            throw new RuntimeException(DRIVER_ALREADY_HAS_CAB_ASSIGNED);
         }
 
         if (cabRepository.findByLicensePlate(cab.getLicensePlate()).isPresent()) {
-            throw new RuntimeException("License plate already exists");
+            throw new RuntimeException(LICENSE_PLATE_ALREADY_EXISTS);
         }
 
         return cabRepository.save(cab);
@@ -68,7 +70,7 @@ public class CabService {
 
     public Cab updateCabStatus(Long id, Cab.CabStatus status) {
         Cab cab = cabRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cab not found"));
+                .orElseThrow(() -> new RuntimeException(CAB_NOT_FOUND));
 
         cab.setStatus(status);
         return cabRepository.save(cab);
@@ -76,7 +78,7 @@ public class CabService {
 
     public Cab updateCab(Long id, Cab updatedCab) {
         Cab existingCab = cabRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cab not found"));
+                .orElseThrow(() -> new RuntimeException(CAB_NOT_FOUND));
 
         existingCab.setLicensePlate(updatedCab.getLicensePlate());
         existingCab.setMake(updatedCab.getMake());
@@ -91,7 +93,7 @@ public class CabService {
 
     public void deleteCab(Long id) {
         if (!cabRepository.existsById(id)) {
-            throw new RuntimeException("Cab not found");
+            throw new RuntimeException(CAB_NOT_FOUND);
         }
         cabRepository.deleteById(id);
     }
