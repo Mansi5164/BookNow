@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
 
+import static com.cabbooking.util.ApplicationConstants.API_CABS_BASE_PATH;
+import static com.cabbooking.util.ApplicationConstants.HTTP_CREATED;
+
 @RestController
-@RequestMapping("/api/cabs")
+@RequestMapping(API_CABS_BASE_PATH)
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class CabController {
@@ -22,7 +25,7 @@ public class CabController {
     public ResponseEntity<Cab> createCab(@Valid @RequestBody Cab cab) {
         try {
             Cab createdCab = cabService.createCab(cab);
-            return new ResponseEntity<>(createdCab, HttpStatus.CREATED);
+            return new ResponseEntity<>(createdCab, HttpStatus.valueOf(HTTP_CREATED));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }
