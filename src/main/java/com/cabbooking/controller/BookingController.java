@@ -13,8 +13,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.cabbooking.util.ApplicationConstants.API_BOOKINGS_BASE_PATH;
+import static com.cabbooking.util.ApplicationConstants.HTTP_CREATED;
+
 @RestController
-@RequestMapping("/api/bookings")
+@RequestMapping(API_BOOKINGS_BASE_PATH)
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class BookingController {
@@ -25,7 +28,7 @@ public class BookingController {
     public ResponseEntity<Booking> createBooking(@Valid @RequestBody Booking booking) {
         try {
             Booking createdBooking = bookingService.createBooking(booking);
-            return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
+            return new ResponseEntity<>(createdBooking, HttpStatus.valueOf(HTTP_CREATED));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }

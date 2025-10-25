@@ -4,7 +4,6 @@ import com.cabbooking.entity.LocationLog;
 import com.cabbooking.service.LocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.cabbooking.util.ApplicationConstants.API_LOCATIONS_BASE_PATH;
+import static com.cabbooking.util.ApplicationConstants.HTTP_CREATED;
+
 @RestController
-@RequestMapping("/api/locations")
+@RequestMapping(API_LOCATIONS_BASE_PATH)
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class LocationController {
@@ -23,7 +25,8 @@ public class LocationController {
     @PostMapping
     public ResponseEntity<LocationLog> logLocation(@Valid @RequestBody LocationLog locationLog) {
         LocationLog savedLocation = locationService.logLocation(locationLog);
-        return new ResponseEntity<>(savedLocation, HttpStatus.CREATED);
+        return ResponseEntity.status(HTTP_CREATED).body(savedLocation);
+
     }
 
     @GetMapping("/driver/{driverId}")

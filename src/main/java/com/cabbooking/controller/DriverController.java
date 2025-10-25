@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
 
+import static com.cabbooking.util.ApplicationConstants.API_DRIVERS_BASE_PATH;
+import static com.cabbooking.util.ApplicationConstants.HTTP_CREATED;
+
 @RestController
-@RequestMapping("/api/drivers")
+@RequestMapping(API_DRIVERS_BASE_PATH)
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class DriverController {
@@ -22,7 +25,7 @@ public class DriverController {
     public ResponseEntity<Driver> createDriver(@Valid @RequestBody Driver driver) {
         try {
             Driver createdDriver = driverService.createDriver(driver);
-            return new ResponseEntity<>(createdDriver, HttpStatus.CREATED);
+            return new ResponseEntity<>(createdDriver, HttpStatus.valueOf(HTTP_CREATED));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }

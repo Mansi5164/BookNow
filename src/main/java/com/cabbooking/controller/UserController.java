@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
 
+import static com.cabbooking.util.ApplicationConstants.*;
+
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(API_USERS_BASE_PATH)
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class UserController {
@@ -100,9 +102,9 @@ public class UserController {
     public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
         boolean isValid = userService.validateCredentials(email, password);
         if (isValid) {
-            return ResponseEntity.ok("Login successful");
+            return ResponseEntity.ok(LOGIN_SUCCESS);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            return ResponseEntity.status(HTTP_UNAUTHORIZED).body(INVALID_CREDENTIALS);
         }
     }
 }
