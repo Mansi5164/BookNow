@@ -22,10 +22,12 @@ public class Booking {
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Booking number is required")
     private String bookingNumber;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "User is required")
     private User user;
 
     @ManyToOne
@@ -38,25 +40,32 @@ public class Booking {
 
     // Pickup location
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Pickup address is required")
     private String pickupAddress;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Pickup latitude is required")
     private Double pickupLatitude;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Pickup longitude is required")
     private Double pickupLongitude;
 
     // Drop-off location
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Dropoff address is required")
     private String dropoffAddress;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Dropoff latitude is required")
     private Double dropoffLatitude;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Dropoff longitude is required")
     private Double dropoffLongitude;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Requested time is required")
     private LocalDateTime requestedTime;
 
     private LocalDateTime acceptedTime;
@@ -65,10 +74,12 @@ public class Booking {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Status is required")
     private BookingStatus status = BookingStatus.REQUESTED;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Requested cab type is required")
     private CabType requestedCabType;
 
     private BigDecimal estimatedFare;

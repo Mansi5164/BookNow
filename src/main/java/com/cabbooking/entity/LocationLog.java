@@ -21,6 +21,7 @@ public class LocationLog {
 
     @ManyToOne
     @JoinColumn(name = "driver_id", nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Driver is required")
     private Driver driver;
 
     @ManyToOne
@@ -28,15 +29,19 @@ public class LocationLog {
     private Booking booking;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Latitude is required")
     private Double latitude;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Longitude is required")
     private Double longitude;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Speed is required")
     private Double speed;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Heading is required")
     private Double heading;
 
     @CreationTimestamp
