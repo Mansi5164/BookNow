@@ -43,7 +43,7 @@ public class Cab {
     @jakarta.validation.constraints.NotBlank(message = "Color is required")
     private String color;
 
-    @Column(nullable = false)
+    @Column(name = "manufacture_year", nullable = false)
     @jakarta.validation.constraints.NotNull(message = "Year is required")
     private Integer year;
 
