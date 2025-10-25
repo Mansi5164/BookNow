@@ -22,18 +22,28 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "First name is required")
+    @jakarta.validation.constraints.Size(min = 1, max = 100, message = "First name must be between 1 and 100 characters")
     private String firstName;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Last name is required")
+    @jakarta.validation.constraints.Size(min = 1, max = 100, message = "Last name must be between 1 and 100 characters")
     private String lastName;
 
     @Column(unique = true, nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Email is required")
+    @jakarta.validation.constraints.Email(message = "Email should be valid")
     private String email;
 
     @Column(unique = true, nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Phone number is required")
+    @jakarta.validation.constraints.Pattern(regexp = "\\d{10}", message = "Phone number should be 10 digits")
     private String phoneNumber;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Password is required")
+    @jakarta.validation.constraints.Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
     @Enumerated(EnumType.STRING)

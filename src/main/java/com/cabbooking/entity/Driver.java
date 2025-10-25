@@ -23,12 +23,16 @@ public class Driver {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "User is required")
+    @jakarta.validation.Valid
     private User user;
 
     @Column(unique = true, nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "License number is required")
     private String licenseNumber;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "License expiry date is required")
     private String licenseExpiryDate;
 
     private Double rating = 0.0;

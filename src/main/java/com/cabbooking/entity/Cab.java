@@ -23,21 +23,28 @@ public class Cab {
 
     @OneToOne
     @JoinColumn(name = "driver_id", nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Driver is required")
+    @jakarta.validation.Valid
     private Driver driver;
 
     @Column(unique = true, nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "License plate is required")
     private String licensePlate;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Make is required")
     private String make;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Model is required")
     private String model;
 
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotBlank(message = "Color is required")
     private String color;
 
-    @Column(nullable = false)
+    @Column(name = "manufacture_year", nullable = false)
+    @jakarta.validation.constraints.NotNull(message = "Year is required")
     private Integer year;
 
     @Enumerated(EnumType.STRING)

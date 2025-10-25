@@ -10,6 +10,7 @@
 /workspaces/BookNow/src/main/java/com/cabbooking/controller/UserController.java
 /workspaces/BookNow/src/main/java/com/cabbooking/exception/InvalidRequestException.java
 /workspaces/BookNow/src/main/java/com/cabbooking/service/BookingService.java
+/workspaces/BookNow/src/main/java/com/cabbooking/util/ApplicationConstants.java
 /workspaces/BookNow/src/main/java/com/cabbooking/service/LocationService.java
 /workspaces/BookNow/src/main/java/com/cabbooking/CabBookingSystemApplication.java
 /workspaces/BookNow/src/main/java/com/cabbooking/dto/BookingRequestDto.java
