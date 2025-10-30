@@ -1,0 +1,25 @@
+package com.thealgorithms.greedyalgorithms;
+
+import java.util.*;
+
+/**
+ * Selects maximum number of activities that don't overlap.
+ * Time Complexity: O(n log n)
+ */
+public class ActivitySelection {
+
+    public static List<int[]> selectActivities(int[][] activities) {
+        Arrays.sort(activities, Comparator.comparingInt(a -> a[1])); // sort by finish time
+
+        List<int[]> selected = new ArrayList<>();
+        int lastFinish = -1;
+
+        for (int[] act : activities) {
+            if (act[0] >= lastFinish) {
+                selected.add(act);
+                lastFinish = act[1];
+            }
+        }
+        return selected;
+    }
+}
